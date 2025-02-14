@@ -7,6 +7,7 @@ from airflow.operators.python import PythonOperator
 import os
 
 def seed_check():
+    """ For the first time alone the seed cmd will be called. In the consecutive calls dbt run cmds only called"""
     if not os.path.exists('/tmp/dbt_seed_done'): 
         os.system('dbt seed --project-dir /home/ubuntu/dbt_databricks/dbt_databricks_project --select orders order_items')
         with open('/tmp/dbt_seed_done', 'w') as f:
