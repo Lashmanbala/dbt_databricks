@@ -20,10 +20,10 @@ with DAG(
     catchup=False,         # No backfill, only current and future runs
 ) as dag:
 
-    # seed_task = PythonOperator(
-    #     task_id='dbt_seed_check',
-    #     python_callable=seed_check,
-    # )
+    seed_task = PythonOperator(
+        task_id='dbt_seed_check',
+        python_callable=seed_check,
+    )
 
     run_silver = BashOperator(
         task_id='dbt_run_silver',
