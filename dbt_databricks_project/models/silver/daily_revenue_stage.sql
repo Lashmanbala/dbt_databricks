@@ -10,7 +10,7 @@ FROM {{ ref('orders') }} AS o
 JOIN {{ ref('order_items') }} AS oi
     ON o.order_id = oi.order_item_order_id
 WHERE o.order_status IN ('COMPLETE', 'CLOSED')
-  AND date_format(o.order_date, 'yyyyMM') = '201308'
+  AND date_format(o.order_date, 'yyyyMM') = '{{ var("target_date", "201307") }}'
 GROUP BY o.order_date
 
 
