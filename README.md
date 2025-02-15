@@ -1,4 +1,4 @@
-# Revenue Reporting Pipeline on Databricks by DBT
+# Revenue Reporting Pipeline on Databricks by DBT and Airflow
 
 ## Overview
 
@@ -21,3 +21,22 @@ The DBT seed will create the raw tables in bronze layer and the data in these ta
 The intermediate result is stored in staging table in the silver layer. And in the each consecutive runs the older data is cleaned and the current data is stored in the staging table.
 
 The final reporting table is updated with the new data from staging table and stored in gold layer for reporting.
+
+## Setup
+To setup this project locally, follow these steps
+
+1. **Create a virtual environment and install dbt and airflow with databricks dependencies:**
+    ```bash
+    pip3 install dbt-core
+    pip3 install dbt-databricks
+    pip install apache-airflow
+    pip install apache-airflow-providers-databricks
+    ```
+
+2. **Create an unity catalog and a schema in Databricks**
+
+3. **Configure dbt project with DBT configurations**
+    ```bash
+    dbt init
+    ```
+4.
