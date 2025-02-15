@@ -31,6 +31,7 @@ To setup this project locally, follow these steps
     pip3 install dbt-databricks
     pip install apache-airflow
     pip install apache-airflow-providers-databricks
+    pip install psycopg2-binary
     ```
 
 2. **Create an unity catalog and a schema in Databricks**
@@ -39,4 +40,60 @@ To setup this project locally, follow these steps
     ```bash
     dbt init
     ```
-4.
+
+4. **Copy Dbt files:**
+   
+   Copy seeds, models, macros directories in dbt_databricks_project directory from this repo, replace the ones in your dbt project directory.
+
+5. **Setup postgres db for airflow:**
+   
+    Copy the airflow_Dockerfile and docker-compose.yml files from this repo and run:
+   ```bash
+    docker-compose up
+   ```
+
+6. **Setup Airflow:**
+   
+   (i) Create dags directory copy dbt_dag in dags directory from this repo
+
+   (ii) Update the airflow.cfg file with:
+   
+       executor = LocalExecutor
+       parallelism = 4
+       sql_alchemy_conn = postgresql+psycopg2://postgres:postgres123@localhost:5432/airflow_db
+
+   (iii) Setup airflow home to the pwd
+       ```bash
+        export AIRFLOW_HOME= <your/pwd/>
+        echo $AIRFLOW_HOME
+       ```
+   
+   (iv) Init Airflow:
+   
+       ```bash
+        airflow db init
+        airflow users create --username admin --password admin --firstname Air --lastname Flow --role Admin --email admin@example.com
+        airflow webserver -D --port 8080 
+        airflow scheduler
+       ```
+7. **Create Databricks connection in Airflow web UI:**
+
+       localhost:8080
+
+    Go to the Airflow UI -> Admin -> Connections.
+   
+    Add a new connection with:
+   
+        Conn ID: databricks_default
+   
+        Conn Type: Databricks
+   
+        Host: https://<your-databricks-instance>
+
+        login: (optional)
+   
+        Password: <your-databricks-personal-access-token>
+   
+8. **Trigger dbt_dag in the web UI:**
+
+    From the next consecutive triggers update the date variable in the dbt_dag file with the next month for incremental processing
