@@ -33,4 +33,52 @@ seeds:
       - name: order_customer_id
       - name: order_status
 
-    
+version: 2
+
+seeds:
+  - name: order_items
+    config:
+      column_types:
+        order_item_id: integer
+        order_item_order_id: integer
+        order_item_product_id: integer
+        order_item_quantity: integer
+        order_item_subtotal: float
+        order_item_product_price: float
+
+    columns:
+      - name: order_item_id
+        description: "Primary key for order items"
+        tests:
+          - unique        # Ensure it's a primary key
+          - not_null      # PK should never be null
+
+      - name: order_item_order_id
+        description: "Foreign key linking to orders"
+        tests:
+          - relationships:
+              to: ref('orders')    # Foreign key linking to 'orders' table
+              field: order_id       # Must match primary key in 'orders'
+      
+      - name: order_item_subtotal
+        tests:
+          - not_null
+          - positive_values  # defined in macros
+
+  - name: orders
+    config:
+      column_types:
+        order_id: integer
+        order_date: timestamp
+        order_customer_id: integer
+        order_status: string
+
+    columns:
+      - name: order_id
+        tests:
+          - unique    # Ensure it's a primary key
+          - not_null  # PK should never be null
+
+      - name: order_date
+        tests:
+          - not_null  # Order date must not be null
