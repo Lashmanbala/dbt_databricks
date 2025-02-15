@@ -1,0 +1,17 @@
+services:
+
+  postgres_airflow:
+    image: postgres:latest
+    container_name: postgres_airflow
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+      POSTGRES_DB: airflow_db
+    networks:
+      - migration_network
+    ports:
+      - "5432:5432"
+    
+networks:
+  migration_network:
+    driver: bridge
