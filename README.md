@@ -2,6 +2,8 @@
 
 ## Overview
 
+![Alt text](architecture_4.png)
+
 The requirement is to develope a revenue reporting system in databricks and modularize the transormation logics using dbt.
 
 The data is provided in csv format. 
