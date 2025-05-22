@@ -56,7 +56,7 @@ To setup this project locally, follow these steps
 
 6. **Setup Airflow:**
    
-   (i) Create dags directory copy dbt_dag in dags directory from this repo
+   (i) Create dags directory and copy dbt_dag in dags directory from this repo
 
    (ii) Update the airflow.cfg file with:
    
@@ -65,19 +65,18 @@ To setup this project locally, follow these steps
        sql_alchemy_conn = postgresql+psycopg2://postgres:postgres123@localhost:5432/airflow_db
 
    (iii) Setup airflow home to the pwd
-       ```bash
-        export AIRFLOW_HOME= <your/pwd/>
-        echo $AIRFLOW_HOME
-       ```
+   ```bash
+    export AIRFLOW_HOME= <your/pwd/>
+    echo $AIRFLOW_HOME
+   ```
    
    (iv) Init Airflow:
-   
-       ```bash
-        airflow db init
-        airflow users create --username admin --password admin --firstname Air --lastname Flow --role Admin --email admin@example.com
-        airflow webserver -D --port 8080 
-        airflow scheduler
-       ```
+   ```bash
+    airflow db init
+    airflow users create --username admin --password admin --firstname Air --lastname Flow --role Admin --email admin@example.com
+    airflow webserver -D --port 8080 
+    airflow scheduler
+   ```
 7. **Create Databricks connection in Airflow web UI:**
 
        localhost:8080
